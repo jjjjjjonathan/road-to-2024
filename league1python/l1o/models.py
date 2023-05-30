@@ -1,18 +1,18 @@
 from django.db import models
 
 
-class Divisions(models.Model):
+class Division(models.Model):
     name = models.CharField(max_length=80)
 
     def __str__(self):
         return self.name
 
 
-class Teams(models.Model):
+class Team(models.Model):
     name = models.CharField(max_length=80)
     points_in_2022 = models.IntegerField()
     division = models.ForeignKey(
-        Divisions, on_delete=models.CASCADE, related_name="division"
+        Division, on_delete=models.CASCADE, related_name="team_division"
     )
 
     def __str__(self):
@@ -52,15 +52,15 @@ class Teams(models.Model):
         return self.points_in_2023() + (self.points_in_2022 * 0.75)
 
 
-class Matches(models.Model):
+class Match(models.Model):
     home_team = models.ForeignKey(
-        Teams, on_delete=models.CASCADE, related_name="home_matches"
+        Team, on_delete=models.CASCADE, related_name="home_matches"
     )
     away_team = models.ForeignKey(
-        Teams, on_delete=models.CASCADE, related_name="away_matches"
+        Team, on_delete=models.CASCADE, related_name="away_matches"
     )
     division = models.ForeignKey(
-        Divisions, on_delete=models.CASCADE, related_name="division"
+        Division, on_delete=models.CASCADE, related_name="match_division"
     )
     home_score = models.IntegerField()
     away_score = models.IntegerField()
