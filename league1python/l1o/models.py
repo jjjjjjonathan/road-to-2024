@@ -68,39 +68,3 @@ class Match(models.Model):
 
     def __str__(self):
         return f"{self.home_team} vs. {self.away_team}"
-
-
-# Team.objects.annotate(
-#     wins=(
-#         Count(
-#             "home_matches",
-#             filter=Q(home_matches__home_score__gt=F("home_matches__away_score")),
-#         )
-#         + Count(
-#             "away_matches",
-#             filter=Q(away_matches__away_score__gt=F("away_matches__home_score")),
-#         )
-#     ),
-#     losses=(
-#         Count(
-#             "home_matches",
-#             filter=Q(home_matches__home_score__lt=F("home_matches__away_score")),
-#         )
-#         + Count(
-#             "away_matches",
-#             filter=Q(away_matches__away_score__lt=F("away_matches__home_score")),
-#         )
-#     ),
-#     draws=(
-#         Count(
-#             "home_matches",
-#             filter=Q(home_matches__home_score__exact=F("home_matches__away_score")),
-#         )
-#         + Count(
-#             "away_matches",
-#             filter=Q(away_matches__away_score__exact=F("away_matches__home_score")),
-#         )
-#     ),
-# ).annotate(points_in_2023=(F("wins") * 3) + F("draws")).annotate(
-#     total_points=(F("points_in_2022") * 0.75) + F("points_in_2023")
-# ).order_by("-points_in_2023")
