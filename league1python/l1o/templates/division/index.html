@@ -1,29 +1,9 @@
-{% if division %}
-<h1>{{division.name}}</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Rank</th>
-        <th>Team</th>
-        <th>Wins</th>
-        <th>Losses</th>
-        <th>Draws</th>
-        <th>Total Points</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for team in teams %}
-        <tr>
-          <td>{{ forloop.counter }}</td>
-          <td>{{ team.name }}</td>
-          <td>{{ team.wins }}</td>
-          <td>{{ team.losses }}</td>
-          <td>{{ team.draws }}</td>
-          <td>{{ team.total_points }}</td>          
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-{% else %}
-  <p>no teams</p>
+{% if divisions %}
+<ul>
+  {% for division in divisions %}
+  <li>
+    <a href="{% url 'division_detail' division.id %}">{{ division.name }}</a>
+  </li>
+  {% endfor %}
+</ul>
 {% endif %}

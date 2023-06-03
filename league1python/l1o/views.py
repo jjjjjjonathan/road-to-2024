@@ -1,12 +1,18 @@
 from django.http import HttpResponse
-from django.template import loader
+from django.shortcuts import render, get_object_or_404
 
 from .models import Division
 from django.db.models import Count, F, Q
 
 
 def index(request):
-    division = Division.objects.get(pk=1)
+    divisions = Division.objects.all()
+    context = {"divisions": divisions}
+    return render(request, "division/index.html", context)
+
+
+def detail(request, division_id):
+    division = get_object_or_404(Division, pk=division_id)
     teams = (
         division.team_division.annotate(
             wins=(
@@ -57,10 +63,5 @@ def index(request):
         .order_by("-total_points")
     )
 
-    template = loader.get_template("division/index.html")
     context = {"division": division, "teams": teams}
-    return HttpResponse(template.render(context, request))
-
-
-def team_detail(request, team_id):
-    return HttpResponse("You're looking at team %s" % team_id)
+    return render(request, "division/division.html", context)
