@@ -2,7 +2,7 @@
 <ul>
   {% for division in divisions %}
   <li>
-    <a href="{% url 'division_detail' division.id %}">{{ division.name }}</a>
+    <a href="{% url 'l1o:division' division.id %}">{{ division.name }}</a>
   </li>
   {% endfor %}
 </ul>

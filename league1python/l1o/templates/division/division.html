@@ -1,13 +1,19 @@
 {% if division %}
 <h1>{{division.name}}</h1>
+  <!-- <form action="{% url 'l1o:division' division.id %}" method="get">
+    <input type="datetime-local">
+    <input type="submit" value="Submit">
+  </form> -->
+  
   <table>
     <thead>
       <tr>
         <th>Rank</th>
         <th>Team</th>
+        <th>Matches Played</th>
         <th>Wins</th>
-        <th>Losses</th>
         <th>Draws</th>
+        <th>Losses</th>
         <th>Total Points</th>
       </tr>
     </thead>
@@ -16,14 +22,22 @@
         <tr>
           <td>{{ forloop.counter }}</td>
           <td>{{ team.name }}</td>
+          <td>{{ team.matches_played }}</td>
           <td>{{ team.wins }}</td>
-          <td>{{ team.losses }}</td>
           <td>{{ team.draws }}</td>
+          <td>{{ team.losses }}</td>
           <td>{{ team.total_points }}</td>          
         </tr>
       {% endfor %}
     </tbody>
   </table>
+  <a href="new">Create a new {{ division.name }} match</a>
+  <br>
+  {% if division.id == 1 %}
+  <a href="/division/2">Go to Women's Premier Division</a>
+  {% else %}
+  <a href="/division/1">Go to Men's Premier Division</a>
+  {% endif %}
 {% else %}
   <p>no teams</p>
 {% endif %}

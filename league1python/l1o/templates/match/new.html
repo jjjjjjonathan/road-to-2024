@@ -1,0 +1,33 @@
+<form action="{% url 'l1o:create' %}" method="post">
+  {% csrf_token %}
+  <fieldset>
+    <input type="hidden" value="{{ division_id }}" name="division-id">
+    <label for="home-team">Select home team</label>
+    <select name="home-team" id="">
+        {% for team in teams %}
+        <option value="{{ team.id }}">{{ team.name }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <label for="away-team">Select away team</label>
+    <select name="away-team" id="">
+        {% for team in teams %}
+        <option value="{{ team.id }}">{{ team.name }}</option>
+        {% endfor %}
+    </select>
+    <br>
+    <label for="home-score">Type home score</label>
+    <input type="number" name="home-score" id="">
+    <br>
+    <label for="away-score">Type away score</label>
+    <input type="number" name="away-score" id="">
+    <br>
+    <label for="e2e-id">Type E2E ID</label>
+    <input type="number" name="e2e-id" id="">
+    <br>
+    <label for="scheduled-time">Select when match was played</label>
+    <input type="datetime-local" name="scheduled-time" id="">
+
+  </fieldset>
+  <input type="submit" value="Submit">
+  </form>
