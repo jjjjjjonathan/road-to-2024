@@ -1,9 +1,15 @@
 {% if division %}
 <h1>{{division.name}}</h1>
-  <!-- <form action="{% url 'l1o:division' division.id %}" method="get">
-    <input type="datetime-local">
+  <form action="{% url 'l1o:division' division.id %}" method="get">
+    <input type="datetime-local" name="date">
     <input type="submit" value="Submit">
-  </form> -->
+  </form>
+
+  {% if filter_date is not None %}
+  
+  <p>Only including matches on or before {{ filter_date }}.</p>
+
+  {% endif %}
   
   <table>
     <thead>
@@ -37,6 +43,9 @@
   <a href="/division/2">Go to Women's Premier Division</a>
   {% else %}
   <a href="/division/1">Go to Men's Premier Division</a>
+  {% endif %}
+  {% if today is not None %}
+  {{ today }}
   {% endif %}
 {% else %}
   <p>no teams</p>
