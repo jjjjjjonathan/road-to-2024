@@ -11,8 +11,8 @@ def index(request):
     return render(request, "division/index.html", context)
 
 
-def detail(request, division_id):
-    division = get_object_or_404(Division, pk=division_id)
+def division(request, division_id):
+    division = get_object_or_404(Division, pk=int(division_id))
 
     date = datetime.now()
 
@@ -119,3 +119,14 @@ def create(request):
     )
 
     return redirect(f"/division/{division.id}")
+
+
+def team(request, team_id):
+    team = get_object_or_404(Team, pk=int(team_id))
+    home_matches = team.home_matches.all()
+    away_matches = team.away_matches.all()
+    matches = home_matches | away_matches
+    sorted_matches = matches.distinct().order_by("scheduled_time")
+    print(sorted_matches)
+    context = {"team": team, "matches": sorted_matches}
+    return render(request, "team/team.html", context)

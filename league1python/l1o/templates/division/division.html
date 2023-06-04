@@ -27,7 +27,9 @@
       {% for team in teams %}
         <tr>
           <td>{{ forloop.counter }}</td>
-          <td>{{ team.name }}</td>
+          <td>
+            <a href="{% url 'l1o:team' team.id %}">{{ team.name }}</a>
+          </td>
           <td>{{ team.matches_played }}</td>
           <td>{{ team.wins }}</td>
           <td>{{ team.draws }}</td>

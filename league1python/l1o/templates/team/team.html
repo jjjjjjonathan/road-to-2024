@@ -1,0 +1,48 @@
+<h1>{{ team.name }} - {{ team.division.name }}</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Home Team</th>
+      <th>Home Score</th>
+      <th>Away Score</th>
+      <th>Away Team</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for match in matches %}
+    <tr>
+      <td>{{ match.scheduled_time }}</td>
+      <td>
+        {% if match.home_score > match.away_score %}
+        <strong>{{ match.home_team.name }}</strong>
+        {% else %}
+        {{ match.home_team.name }}
+        {% endif %}
+      </td>
+      <td>
+        {% if match.home_score > match.away_score %}
+        <strong>{{ match.home_score }}</strong>
+        {% else %}
+        {{ match.home_score }}
+        {% endif %}
+      </td>
+      <td>
+        {% if match.away_score > match.home_score %}
+        <strong>{{ match.away_score }}</strong>
+        {% else %}
+        {{ match.away_score }}
+        {% endif %}
+      </td>
+      <td>
+        {% if match.away_score > match.home_score %}
+        <strong>{{ match.away_team.name }}</strong>
+        {% else %}
+        {{ match.away_team.name }}
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<a href="{% url 'l1o:division' team.division.id %}">Go back to {{ team.division.name }}</a>
