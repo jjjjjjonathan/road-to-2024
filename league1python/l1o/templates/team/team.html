@@ -1,4 +1,10 @@
-<h1>{{ team.name }} ({{ wins }}-{{ draws }}-{{ losses }}) </h1>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{{ team.name }} || {{ team.division.name }}</title>
+  </head>
+  <body>
+    <h1>{{ team.name }} ({{ wins }}-{{ draws }}-{{ losses }}) </h1>
 <h2>{{ team.division.name }}</h2>
 <table>
   <thead>
@@ -47,3 +53,7 @@
   </tbody>
 </table>
 <a href="{% url 'l1o:division' team.division.id %}">Go back to {{ team.division.name }}</a>
+  </body>
+</html>
+
+

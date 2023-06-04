@@ -1,9 +1,19 @@
-{% if divisions %}
-<ul>
-  {% for division in divisions %}
-  <li>
-    <a href="{% url 'l1o:division' division.id %}">{{ division.name }}</a>
-  </li>
-  {% endfor %}
-</ul>
-{% endif %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>League1 Ontario pro/rel standings</title>
+  </head>
+  <body>
+    {% if divisions %}
+    <ul>
+    {% for division in divisions %}
+      <li>
+        <a href="{% url 'l1o:division' division.id %}">{{ division.name }}</a>
+      </li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+  </body>
+</html>
+
+

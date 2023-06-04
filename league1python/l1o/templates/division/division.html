@@ -1,54 +1,68 @@
-{% if division %}
-<h1>{{division.name}}</h1>
-  <form action="{% url 'l1o:division' division.id %}" method="get">
-    <input type="datetime-local" name="date">
-    <input type="submit" value="Submit">
-  </form>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>
+      {% if division %}
+      {{ division.name }}
+      {% else %}
+      404
+      {% endif %}
+    </title>
+  </head>
+  <body>
+    {% if division %}
+    <h1>{{division.name}}</h1>
+    <form action="{% url 'l1o:division' division.id %}" method="get">
+      <input type="datetime-local" name="date">
+      <input type="submit" value="Submit">
+    </form>
 
-  {% if filter_date is not None %}
+    {% if filter_date is not None %}
   
-  <p>Only including matches on or before {{ filter_date }}.</p>
+    <p>Only including matches on or before {{ filter_date }}.</p>
 
-  {% endif %}
+    {% endif %}
   
-  <table>
-    <thead>
-      <tr>
-        <th>Rank</th>
-        <th>Team</th>
-        <th>Matches Played</th>
-        <th>Wins</th>
-        <th>Draws</th>
-        <th>Losses</th>
-        <th>Total Points</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for team in teams %}
+    <table>
+      <thead>
         <tr>
-          <td>{{ forloop.counter }}</td>
-          <td>
-            <a href="{% url 'l1o:team' team.id %}">{{ team.name }}</a>
-          </td>
-          <td>{{ team.matches_played }}</td>
-          <td>{{ team.wins }}</td>
-          <td>{{ team.draws }}</td>
-          <td>{{ team.losses }}</td>
-          <td>{{ team.total_points }}</td>          
+          <th>Rank</th>
+          <th>Team</th>
+          <th>Matches Played</th>
+          <th>Wins</th>
+          <th>Draws</th>
+          <th>Losses</th>
+          <th>Total Points</th>
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <a href="new">Create a new {{ division.name }} match</a>
-  <br>
-  {% if division.id == 1 %}
-  <a href="/division/2">Go to Women's Premier Division</a>
+      </thead>
+      <tbody>
+        {% for team in teams %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>
+              <a href="{% url 'l1o:team' team.id %}">{{ team.name }}</a>
+            </td>
+            <td>{{ team.matches_played }}</td>
+            <td>{{ team.wins }}</td>
+            <td>{{ team.draws }}</td>
+            <td>{{ team.losses }}</td>
+            <td>{{ team.total_points }}</td>          
+          </tr>
+        {% endfor %}<
+      </tbody>
+    </table>
+    <a href="new">Create a new {{ division.name }} match</a>
+    <br>
+    {% if division.id == 1 %}
+    <a href="/division/2">Go to Women's Premier Division</a>
+    {% else %}
+    <a href="/division/1">Go to Men's Premier Division</a>
+    {% endif %}
+    {% if today is not None %}
+    {{ today }}
+    {% endif %}
   {% else %}
-  <a href="/division/1">Go to Men's Premier Division</a>
+    <p>no teams</p>
   {% endif %}
-  {% if today is not None %}
-  {{ today }}
-  {% endif %}
-{% else %}
-  <p>no teams</p>
-{% endif %}
+  </body>
+</html>
