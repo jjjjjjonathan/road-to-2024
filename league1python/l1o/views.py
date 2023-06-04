@@ -127,6 +127,11 @@ def team(request, team_id):
     away_matches = team.away_matches.all()
     matches = home_matches | away_matches
     sorted_matches = matches.distinct().order_by("scheduled_time")
-    print(sorted_matches)
-    context = {"team": team, "matches": sorted_matches}
+    context = {
+        "team": team,
+        "matches": sorted_matches,
+        "wins": team.wins_in_2023(),
+        "losses": team.losses_in_2023(),
+        "draws": team.draws_in_2023(),
+    }
     return render(request, "team/team.html", context)
