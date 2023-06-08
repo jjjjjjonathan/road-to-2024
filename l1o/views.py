@@ -1,8 +1,6 @@
 from datetime import datetime
 from django.shortcuts import render, get_object_or_404, redirect
-
 from .models import Division, Match, Team
-from django.db.models import Count, F, Q
 
 
 def index(request):
@@ -19,71 +17,7 @@ def division(request, division_id):
     if request.method == "GET" and "date" in request.GET:
         date = request.GET["date"]
 
-    teams = (
-        division.team_division.annotate(
-            matches_played=(
-                Count(
-                    "home_matches",
-                    distinct=True,
-                    filter=Q(home_matches__scheduled_time__lte=date),
-                )
-                + Count(
-                    "away_matches",
-                    distinct=True,
-                    filter=Q(away_matches__scheduled_time__lte=date),
-                )
-            ),
-            wins=(
-                Count(
-                    "home_matches",
-                    filter=Q(home_matches__home_score__gt=F("home_matches__away_score"))
-                    & Q(home_matches__scheduled_time__lte=date),
-                    distinct=True,
-                )
-                + Count(
-                    "away_matches",
-                    filter=Q(away_matches__away_score__gt=F("away_matches__home_score"))
-                    & Q(away_matches__scheduled_time__lte=date),
-                    distinct=True,
-                )
-            ),
-            losses=(
-                Count(
-                    "home_matches",
-                    filter=Q(home_matches__home_score__lt=F("home_matches__away_score"))
-                    & Q(home_matches__scheduled_time__lte=date),
-                    distinct=True,
-                )
-                + Count(
-                    "away_matches",
-                    filter=Q(away_matches__away_score__lt=F("away_matches__home_score"))
-                    & Q(away_matches__scheduled_time__lte=date),
-                    distinct=True,
-                )
-            ),
-            draws=(
-                Count(
-                    "home_matches",
-                    filter=Q(
-                        home_matches__home_score__exact=F("home_matches__away_score")
-                    )
-                    & Q(home_matches__scheduled_time__lte=date),
-                    distinct=True,
-                )
-                + Count(
-                    "away_matches",
-                    filter=Q(
-                        away_matches__away_score__exact=F("away_matches__home_score")
-                    )
-                    & Q(away_matches__scheduled_time__lte=date),
-                    distinct=True,
-                )
-            ),
-        )
-        .annotate(points_in_2023=(F("wins") * 3) + F("draws"))
-        .annotate(total_points=(F("points_in_2022") * 0.75) + F("points_in_2023"))
-        .order_by("-total_points")
-    )
+    teams = division.teams.with_table_records(date)
 
     context = {
         "division": division,
@@ -98,7 +32,7 @@ def division(request, division_id):
 
 def new(request, division_id):
     division = get_object_or_404(Division, pk=division_id)
-    teams = division.team_division.order_by("name")
+    teams = division.teams.order_by("name")
     context = {"name": division.name, "teams": teams, "division_id": division.id}
     return render(request, "match/new.html", context)
 

@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q, F, Count
 
 
 class Division(models.Model):
@@ -8,12 +9,94 @@ class Division(models.Model):
         return self.name
 
 
+class TeamManager(models.Manager):
+    def with_table_records(self, date):
+        return (
+            self.annotate(
+                matches_played=(
+                    Count(
+                        "home_matches",
+                        distinct=True,
+                        filter=Q(home_matches__scheduled_time__lte=date),
+                    )
+                    + Count(
+                        "away_matches",
+                        distinct=True,
+                        filter=Q(away_matches__scheduled_time__lte=date),
+                    )
+                ),
+                wins=(
+                    Count(
+                        "home_matches",
+                        filter=Q(
+                            home_matches__home_score__gt=F("home_matches__away_score")
+                        )
+                        & Q(home_matches__scheduled_time__lte=date),
+                        distinct=True,
+                    )
+                    + Count(
+                        "away_matches",
+                        filter=Q(
+                            away_matches__away_score__gt=F("away_matches__home_score")
+                        )
+                        & Q(away_matches__scheduled_time__lte=date),
+                        distinct=True,
+                    )
+                ),
+                losses=(
+                    Count(
+                        "home_matches",
+                        filter=Q(
+                            home_matches__home_score__lt=F("home_matches__away_score")
+                        )
+                        & Q(home_matches__scheduled_time__lte=date),
+                        distinct=True,
+                    )
+                    + Count(
+                        "away_matches",
+                        filter=Q(
+                            away_matches__away_score__lt=F("away_matches__home_score")
+                        )
+                        & Q(away_matches__scheduled_time__lte=date),
+                        distinct=True,
+                    )
+                ),
+                draws=(
+                    Count(
+                        "home_matches",
+                        filter=Q(
+                            home_matches__home_score__exact=F(
+                                "home_matches__away_score"
+                            )
+                        )
+                        & Q(home_matches__scheduled_time__lte=date),
+                        distinct=True,
+                    )
+                    + Count(
+                        "away_matches",
+                        filter=Q(
+                            away_matches__away_score__exact=F(
+                                "away_matches__home_score"
+                            )
+                        )
+                        & Q(away_matches__scheduled_time__lte=date),
+                        distinct=True,
+                    )
+                ),
+            )
+            .annotate(points_in_2023=(F("wins") * 3) + F("draws"))
+            .annotate(total_points=(F("points_in_2022") * 0.75) + F("points_in_2023"))
+            .order_by("-total_points")
+        )
+
+
 class Team(models.Model):
     name = models.CharField(max_length=80)
     points_in_2022 = models.IntegerField()
     division = models.ForeignKey(
-        Division, on_delete=models.CASCADE, related_name="team_division"
+        Division, on_delete=models.CASCADE, related_name="teams"
     )
+    objects = TeamManager()
 
     def __str__(self):
         return self.name
@@ -57,7 +140,7 @@ class Match(models.Model):
         Team, on_delete=models.CASCADE, related_name="away_matches"
     )
     division = models.ForeignKey(
-        Division, on_delete=models.CASCADE, related_name="match_division"
+        Division, on_delete=models.CASCADE, related_name="matches"
     )
     home_score = models.IntegerField()
     away_score = models.IntegerField()
