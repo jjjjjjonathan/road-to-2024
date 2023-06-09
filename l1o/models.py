@@ -10,19 +10,20 @@ class Division(models.Model):
 
 
 class TeamManager(models.Manager):
-    def with_table_records(self, date):
+    def with_table_records(self):
         return (
             self.annotate(
                 matches_played=(
                     Count(
                         "home_matches",
                         distinct=True,
-                        filter=Q(home_matches__scheduled_time__lte=date),
+                        filter=Q(home_matches__is_completed__exact=True),
                     )
                     + Count(
                         "away_matches",
                         distinct=True,
-                        filter=Q(away_matches__scheduled_time__lte=date),
+                        filter=Q(away_matches__is_completed__exact=True),
+                        # filter=Q(away_matches__scheduled_time__lte=date),
                     )
                 ),
                 wins=(
@@ -31,7 +32,8 @@ class TeamManager(models.Manager):
                         filter=Q(
                             home_matches__home_score__gt=F("home_matches__away_score")
                         )
-                        & Q(home_matches__scheduled_time__lte=date),
+                        & Q(home_matches__is_completed__exact=True),
+                        # & Q(home_matches__scheduled_time__lte=date),
                         distinct=True,
                     )
                     + Count(
@@ -39,7 +41,8 @@ class TeamManager(models.Manager):
                         filter=Q(
                             away_matches__away_score__gt=F("away_matches__home_score")
                         )
-                        & Q(away_matches__scheduled_time__lte=date),
+                        & Q(away_matches__is_completed=True),
+                        # & Q(away_matches__scheduled_time__lte=date),
                         distinct=True,
                     )
                 ),
@@ -49,7 +52,8 @@ class TeamManager(models.Manager):
                         filter=Q(
                             home_matches__home_score__lt=F("home_matches__away_score")
                         )
-                        & Q(home_matches__scheduled_time__lte=date),
+                        & Q(home_matches__is_completed__exact=True),
+                        # & Q(home_matches__scheduled_time__lte=date),
                         distinct=True,
                     )
                     + Count(
@@ -57,7 +61,8 @@ class TeamManager(models.Manager):
                         filter=Q(
                             away_matches__away_score__lt=F("away_matches__home_score")
                         )
-                        & Q(away_matches__scheduled_time__lte=date),
+                        & Q(away_matches__is_completed__exact=True),
+                        # & Q(away_matches__scheduled_time__lte=date),
                         distinct=True,
                     )
                 ),
@@ -69,7 +74,8 @@ class TeamManager(models.Manager):
                                 "home_matches__away_score"
                             )
                         )
-                        & Q(home_matches__scheduled_time__lte=date),
+                        & Q(home_matches__is_completed__exact=True),
+                        # & Q(home_matches__scheduled_time__lte=date),
                         distinct=True,
                     )
                     + Count(
@@ -79,7 +85,8 @@ class TeamManager(models.Manager):
                                 "away_matches__home_score"
                             )
                         )
-                        & Q(away_matches__scheduled_time__lte=date),
+                        & Q(away_matches__is_completed__exact=True),
+                        # & Q(away_matches__scheduled_time__lte=date),
                         distinct=True,
                     )
                 ),
@@ -142,10 +149,11 @@ class Match(models.Model):
     division = models.ForeignKey(
         Division, on_delete=models.CASCADE, related_name="matches"
     )
-    home_score = models.IntegerField()
-    away_score = models.IntegerField()
+    home_score = models.IntegerField(default=0)
+    away_score = models.IntegerField(default=0)
     e2e_id = models.IntegerField()
     scheduled_time = models.DateTimeField()
+    is_completed = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.home_team} {self.home_score}-{self.away_score} {self.away_team}"
+        return f"#{self.e2e_id}: {self.home_team} {self.home_score}-{self.away_score} {self.away_team}"

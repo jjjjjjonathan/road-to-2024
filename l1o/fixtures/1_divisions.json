@@ -1,0 +1,16 @@
+[
+  {
+    "model": "l1o.division",
+    "pk": 1,
+    "fields": {
+      "name": "Men's Premier Division"
+    }
+  },
+  {
+    "model": "l1o.division",
+    "pk": 2,
+    "fields": {
+      "name": "Women's Premier Division"
+    }
+  }
+]

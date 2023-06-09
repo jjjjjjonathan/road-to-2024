@@ -12,7 +12,7 @@
   <body>
     {% if division %}
     <h1>{{division.name}}</h1>
-    <form action="{% url 'l1o:division' division.id %}" method="get">
+    <!-- <form action="{% url 'l1o:division' division.id %}" method="get">
       <input type="datetime-local" name="date">
       <input type="submit" value="Submit">
     </form>
@@ -21,7 +21,7 @@
   
     <p>Only including matches on or before {{ filter_date }}.</p>
 
-    {% endif %}
+    {% endif %} -->
   
     <table>
       <thead>
@@ -48,7 +48,7 @@
             <td>{{ team.losses }}</td>
             <td>{{ team.total_points }}</td>          
           </tr>
-        {% endfor %}<
+        {% endfor %}
       </tbody>
     </table>
     <a href="new">Create a new {{ division.name }} match</a>

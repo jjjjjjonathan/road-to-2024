@@ -1,0 +1,380 @@
+[
+    {
+        "model": "l1o.team",
+        "pk": 1,
+        "fields": {
+            "name": "Vaughan Azzurri",
+            "points_in_2022": 57,
+            "division": 1
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 2,
+        "fields": {
+            "name": "Blue Devils FC",
+            "points_in_2022": 47,
+            "division": 1
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 3,
+        "fields": {
+            "name": "Alliance United FC",
+            "points_in_2022": 45,
+            "division": 1
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 4,
+        "fields": {
+            "name": "North Toronto Nitros",
+            "points_in_2022": 44,
+            "division": 1
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 5,
+        "fields": {
+            "name": "Simcoe County Rovers FC",
+            "points_in_2022": 44,
+            "division": 1
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 6,
+        "fields": {
+            "name": "ProStars FC",
+            "points_in_2022": 43,
+            "division": 1
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 7,
+        "fields": {
+            "name": "Guelph United",
+            "points_in_2022": 42,
+            "division": 1
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 8,
+        "fields": {
+            "name": "Sigma FC",
+            "points_in_2022": 31,
+            "division": 1
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 9,
+        "fields": {
+            "name": "Hamilton United",
+            "points_in_2022": 31,
+            "division": 1
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 10,
+        "fields": {
+            "name": "Electric City FC",
+            "points_in_2022": 30,
+            "division": 1
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 11,
+        "fields": {
+            "name": "Woodbridge Strikers",
+            "points_in_2022": 29,
+            "division": 1
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 12,
+        "fields": {
+            "name": "Scrosoppi FC",
+            "points_in_2022": 28,
+            "division": 1
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 13,
+        "fields": {
+            "name": "Darby FC",
+            "points_in_2022": 25,
+            "division": 1
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 14,
+        "fields": {
+            "name": "Pickering FC",
+            "points_in_2022": 23,
+            "division": 1
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 15,
+        "fields": {
+            "name": "BVB IA Waterloo",
+            "points_in_2022": 22,
+            "division": 1
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 16,
+        "fields": {
+            "name": "St. Catharines Roma",
+            "points_in_2022": 20,
+            "division": 1
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 17,
+        "fields": {
+            "name": "Burlington SC",
+            "points_in_2022": 19,
+            "division": 1
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 18,
+        "fields": {
+            "name": "Windsor City FC",
+            "points_in_2022": 18,
+            "division": 1
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 19,
+        "fields": {
+            "name": "Master's FA",
+            "points_in_2022": 17,
+            "division": 1
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 20,
+        "fields": {
+            "name": "Unionville Milliken S.C.",
+            "points_in_2022": 14,
+            "division": 1
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 21,
+        "fields": {
+            "name": "North Mississauga SC",
+            "points_in_2022": 14,
+            "division": 1
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 22,
+        "fields": {
+            "name": "FC London",
+            "points_in_2022": 10,
+            "division": 1
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 23,
+        "fields": {
+            "name": "Vaughan Azzurri",
+            "points_in_2022": 48,
+            "division": 2
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 24,
+        "fields": {
+            "name": "NDC-Ontario",
+            "points_in_2022": 46,
+            "division": 2
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 25,
+        "fields": {
+            "name": "Woodbridge Strikers",
+            "points_in_2022": 42,
+            "division": 2
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 26,
+        "fields": {
+            "name": "FC London",
+            "points_in_2022": 41,
+            "division": 2
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 27,
+        "fields": {
+            "name": "Simcoe County",
+            "points_in_2022": 41,
+            "division": 2
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 28,
+        "fields": {
+            "name": "Alliance United FC",
+            "points_in_2022": 37,
+            "division": 2
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 29,
+        "fields": {
+            "name": "North Toronto Nitros",
+            "points_in_2022": 36,
+            "division": 2
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 30,
+        "fields": {
+            "name": "Electric City FC",
+            "points_in_2022": 32,
+            "division": 2
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 31,
+        "fields": {
+            "name": "North Mississauga SC",
+            "points_in_2022": 28,
+            "division": 2
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 32,
+        "fields": {
+            "name": "Darby FC",
+            "points_in_2022": 27,
+            "division": 2
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 33,
+        "fields": {
+            "name": "Tecumseh SC",
+            "points_in_2022": 25,
+            "division": 2
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 34,
+        "fields": {
+            "name": "St. Catharines Roma",
+            "points_in_2022": 25,
+            "division": 2
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 35,
+        "fields": {
+            "name": "Guelph Union",
+            "points_in_2022": 24,
+            "division": 2
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 36,
+        "fields": {
+            "name": "Unionville Milliken SC",
+            "points_in_2022": 22,
+            "division": 2
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 37,
+        "fields": {
+            "name": "Blue Devils FC",
+            "points_in_2022": 19,
+            "division": 2
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 38,
+        "fields": {
+            "name": "BVB IA Waterloo",
+            "points_in_2022": 15,
+            "division": 2
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 39,
+        "fields": {
+            "name": "Pickering FC",
+            "points_in_2022": 12,
+            "division": 2
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 40,
+        "fields": {
+            "name": "Hamilton United",
+            "points_in_2022": 10,
+            "division": 2
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 41,
+        "fields": {
+            "name": "ProStars FC",
+            "points_in_2022": 6,
+            "division": 2
+        }
+    },
+    {
+        "model": "l1o.team",
+        "pk": 42,
+        "fields": {
+            "name": "Burlington SC",
+            "points_in_2022": 3,
+            "division": 2
+        }
+    }
+]

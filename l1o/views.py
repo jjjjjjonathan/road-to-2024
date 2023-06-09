@@ -12,12 +12,12 @@ def index(request):
 def division(request, division_id):
     division = get_object_or_404(Division, pk=int(division_id))
 
-    date = datetime.now()
+    # date = datetime.now()
 
-    if request.method == "GET" and "date" in request.GET:
-        date = request.GET["date"]
+    # if request.method == "GET" and "date" in request.GET:
+    #     date = request.GET["date"]
 
-    teams = division.teams.with_table_records(date)
+    teams = division.teams.with_table_records()
 
     context = {
         "division": division,
