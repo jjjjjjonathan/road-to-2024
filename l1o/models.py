@@ -151,7 +151,7 @@ class Match(models.Model):
     )
     home_score = models.IntegerField(default=0)
     away_score = models.IntegerField(default=0)
-    e2e_id = models.IntegerField()
+    e2e_id = models.IntegerField(unique=True)
     scheduled_time = models.DateTimeField()
     is_completed = models.BooleanField(default=False)
 
