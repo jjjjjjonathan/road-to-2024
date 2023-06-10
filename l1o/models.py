@@ -110,30 +110,30 @@ class Team(models.Model):
 
     def wins_in_2023(self):
         home_wins = self.home_matches.filter(
-            home_score__gt=models.F("away_score")
+            home_score__gt=models.F("away_score"), is_completed=True
         ).distinct()
         away_wins = self.away_matches.filter(
-            away_score__gt=models.F("home_score")
+            away_score__gt=models.F("home_score"), is_completed=True
         ).distinct()
         wins = home_wins | away_wins
         return wins.count()
 
     def losses_in_2023(self):
         home_losses = self.home_matches.filter(
-            home_score__lt=models.F("away_score")
+            home_score__lt=models.F("away_score"), is_completed=True
         ).distinct()
         away_losses = self.away_matches.filter(
-            away_score__lt=models.F("home_score")
+            away_score__lt=models.F("home_score"), is_completed=True
         ).distinct()
         losses = home_losses | away_losses
         return losses.count()
 
     def draws_in_2023(self):
         home_draws = self.home_matches.filter(
-            home_score__exact=models.F("away_score")
+            home_score__exact=models.F("away_score"), is_completed=True
         ).distinct()
         away_draws = self.away_matches.filter(
-            away_score__exact=models.F("home_score")
+            away_score__exact=models.F("home_score"), is_completed=True
         ).distinct()
         draws = home_draws | away_draws
         return draws.count()
