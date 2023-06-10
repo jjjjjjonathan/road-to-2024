@@ -1,6 +1,7 @@
 from datetime import datetime
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Division, Match, Team
+from .forms import MatchForm
 
 
 def index(request):
@@ -30,29 +31,19 @@ def division(request, division_id):
     return render(request, "division/division.html", context)
 
 
-def new(request, division_id):
-    division = get_object_or_404(Division, pk=division_id)
-    teams = division.teams.order_by("name")
-    context = {"name": division.name, "teams": teams, "division_id": division.id}
-    return render(request, "match/new.html", context)
+def edit(request, e2e_id):
+    match = Match.objects.get(e2e_id=e2e_id)
+    form = MatchForm(instance=match)
+    context = {"form": form, "match_id": match.id, "division_id": match.division.id}
+    return render(request, "match/edit.html", context)
 
 
-def create(request):
-    division = Division.objects.get(pk=int(request.POST["division-id"]))
-    home_team = Team.objects.get(pk=int(request.POST["home-team"]))
-    away_team = Team.objects.get(pk=int(request.POST["away-team"]))
+def update(request):
+    match = Match.objects.get(pk=int(request.POST["match_id"]))
+    match = MatchForm(request.POST, instance=match)
+    match.save()
 
-    Match.objects.create(
-        home_team=home_team,
-        away_team=away_team,
-        division=division,
-        home_score=int(request.POST["home-score"]),
-        away_score=int(request.POST["away-score"]),
-        e2e_id=int(request.POST["e2e-id"]),
-        scheduled_time=request.POST["scheduled-time"],
-    )
-
-    return redirect(f"/division/{division.id}")
+    return redirect(f"/division/{request.POST['division_id']}")
 
 
 def team(request, team_id):

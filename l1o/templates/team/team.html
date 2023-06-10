@@ -14,12 +14,15 @@
       <th>Home Score</th>
       <th>Away Score</th>
       <th>Away Team</th>
+      <th>Status</th>
     </tr>
   </thead>
   <tbody>
     {% for match in matches %}
     <tr>
-      <td>{{ match.scheduled_time }}</td>
+      <td>
+        <a href="{% url 'l1o:edit' match.e2e_id %}">{{ match.scheduled_time }}</a>
+      </td>
       <td>
         {% if match.home_score > match.away_score %}
         <strong>{{ match.home_team.name }}</strong>
@@ -46,6 +49,13 @@
         <strong>{{ match.away_team.name }}</strong>
         {% else %}
         {{ match.away_team.name }}
+        {% endif %}
+      </td>
+      <td>
+        {% if match.is_completed %}
+        Final
+        {% else %}
+        Pending
         {% endif %}
       </td>
     </tr>

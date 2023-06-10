@@ -1,11 +1,14 @@
-from django import forms
-from django.forms.widgets import NumberInput
+from django.forms import ModelForm, ChoiceField
+from .models import Match, Division
 
 
-class MatchForm(forms.Form):
-    # def __init__(self, *args, **kwargs):
-    #     print(kwargs)
-    #     self.teams = kwargs["teams"]
-    #     team_list = kwargs["teams"]
-
-    match_date = forms.DateField(widget=NumberInput(attrs={"type": "datetime-local"}))
+class MatchForm(ModelForm):
+    class Meta:
+        model = Match
+        fields = [
+            "id",
+            "home_score",
+            "away_score",
+            "e2e_id",
+            "is_completed",
+        ]

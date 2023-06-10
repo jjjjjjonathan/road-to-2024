@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Edit match</title>
+  </head>
+  <body>
+    <form action="{% url 'l1o:update' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="match_id" value="{{ match_id }}">
+      <input type="hidden" name="division_id" value="{{ division_id }}">
+      {{ form }}
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html>
