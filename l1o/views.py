@@ -1,22 +1,19 @@
-from datetime import datetime
+from django.views import generic
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Division, Match, Team
 from .forms import MatchForm
 
 
-def index(request):
-    divisions = Division.objects.all()
-    context = {"divisions": divisions}
-    return render(request, "division/index.html", context)
+class IndexView(generic.ListView):
+    template_name = "division/index.html"
+    context_object_name = "divisions"
+
+    def get_queryset(self):
+        return Division.objects.all()
 
 
 def division(request, division_id):
     division = get_object_or_404(Division, pk=int(division_id))
-
-    # date = datetime.now()
-
-    # if request.method == "GET" and "date" in request.GET:
-    #     date = request.GET["date"]
 
     teams = division.teams.with_table_records()
 
