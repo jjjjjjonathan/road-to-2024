@@ -3,7 +3,14 @@ from django.db.models import Q, F, Count
 
 
 class Division(models.Model):
+    class NumberOfPromotedTeams(models.IntegerChoices):
+        TEN = 10
+        TWELVE = 12
+
     name = models.CharField(max_length=80)
+    number_of_promoted_teams = models.IntegerField(
+        choices=NumberOfPromotedTeams.choices
+    )
 
     def __str__(self):
         return self.name
@@ -13,17 +20,20 @@ class TeamManager(models.Manager):
     def with_table_records(self):
         return (
             self.annotate(
-                matches_played=(
-                    Count(
-                        "home_matches",
-                        distinct=True,
-                        filter=Q(home_matches__is_completed__exact=True),
-                    )
-                    + Count(
-                        "away_matches",
-                        distinct=True,
-                        filter=Q(away_matches__is_completed__exact=True),
-                        # filter=Q(away_matches__scheduled_time__lte=date),
+                matches_remaining=(
+                    Count("home_matches", distinct=True)
+                    + Count("away_matches", distinct=True)
+                    - (
+                        Count(
+                            "home_matches",
+                            distinct=True,
+                            filter=Q(home_matches__is_completed__exact=True),
+                        )
+                        + Count(
+                            "away_matches",
+                            distinct=True,
+                            filter=Q(away_matches__is_completed__exact=True),
+                        )
                     )
                 ),
                 wins=(
