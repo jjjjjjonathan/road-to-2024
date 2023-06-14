@@ -16,15 +16,13 @@ def division(request, division_id):
     division = get_object_or_404(Division, pk=int(division_id))
 
     teams = division.teams.with_table_records()
-    threshold_team = teams[division.number_of_promoted_teams]
-    threshold_points = (
-        threshold_team.matches_remaining * 3 + threshold_team.total_points
-    )
+    max_points_teams = teams.order_by("-max_possible_points")
+    threshold_team = max_points_teams[division.number_of_promoted_teams]
 
     context = {
         "division": division,
         "teams": teams,
-        "threshold_points": threshold_points,
+        "threshold_points": threshold_team.max_possible_points,
     }
     return render(request, "division/division.html", context)
 

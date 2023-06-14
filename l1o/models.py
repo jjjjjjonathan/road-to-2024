@@ -116,9 +116,11 @@ class Team(models.Model):
         return self.name
 
     def clinched_promotion(self):
-        threshold = self.division.teams.with_table_records()[
-            self.division.number_of_promoted_teams
-        ].max_possible_points
+        threshold = (
+            self.division.teams.with_table_records()
+            .order_by("-max_possible_points")[self.division.number_of_promoted_teams]
+            .max_possible_points
+        )
         return self.total_points > threshold
 
     def clinched_relegation(self):
