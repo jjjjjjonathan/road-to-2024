@@ -16,28 +16,15 @@ def division(request, division_id):
     division = get_object_or_404(Division, pk=int(division_id))
 
     teams = division.teams.with_table_records()
-    # teams_list = []
-
-    # for team in teams:
-    #     teams_list.append(
-    #         {
-    #             "id": team.id,
-    #             "name": team.name,
-    #             "matches_remaining": team.matches_remaining,
-    #             "wins": team.wins,
-    #             "losses": team.losses,
-    #             "draws": team.draws,
-    #             "total_points": team.total_points,
-    #             "clinched_promotion": team.clinched_promotion(),
-    #             "clinched_relegation": team.clinched_relegation(),
-    #         }
-    #     )
-
-    # print(teams_list)
+    threshold_team = teams[division.number_of_promoted_teams]
+    threshold_points = (
+        threshold_team.matches_remaining * 3 + threshold_team.total_points
+    )
 
     context = {
         "division": division,
         "teams": teams,
+        "threshold_points": threshold_points,
     }
     return render(request, "division/division.html", context)
 

@@ -31,17 +31,25 @@
         {% endif %}
       </td>
       <td>
+        {% if match.is_completed %}
         {% if match.home_score > match.away_score %}
         <strong>{{ match.home_score }}</strong>
         {% else %}
         {{ match.home_score }}
         {% endif %}
+        {% else %}
+        -
+        {% endif %}
       </td>
       <td>
+        {% if match.is_completed %}
         {% if match.away_score > match.home_score %}
         <strong>{{ match.away_score }}</strong>
         {% else %}
         {{ match.away_score }}
+        {% endif %}
+        {% else %}
+        -
         {% endif %}
       </td>
       <td>
