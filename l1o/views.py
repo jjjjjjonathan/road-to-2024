@@ -32,7 +32,7 @@ def division(request, division_id):
 def edit(request, e2e_id):
     match = Match.objects.get(e2e_id=e2e_id)
     form = MatchForm(instance=match)
-    context = {"form": form, "match_id": match.id, "division_id": match.division.id}
+    context = {"form": form, "match": match}
     return render(request, "match/edit.html", context)
 
 

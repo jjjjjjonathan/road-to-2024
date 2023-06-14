@@ -2,23 +2,22 @@
 <html lang="en">
   <head>
     <title>
-      {% if division %}
-      {{ division.name }}
-      {% else %}
-      404
-      {% endif %}
+      {% if division %} {{ division.name }} {% else %} 404 {% endif %}
     </title>
   </head>
   <body>
     {% if division %}
     <h1>{{division.name}}</h1>
-    <h2>You need at least {{ threshold_points }} points to guarantee qualification for League1 Ontario's Premier Division in 2024.</h2>
+    <h2>
+      You currently need at least {{ threshold_points }} points to guarantee
+      qualification for League1 Ontario's Premier Division in 2024.
+    </h2>
     <table>
       <thead>
         <tr>
           <th>Rank</th>
           <th>Team</th>
-          <th>Matches Reamining</th>
+          <th>Matches Remaining</th>
           <th>Wins</th>
           <th>Draws</th>
           <th>Losses</th>
@@ -27,36 +26,37 @@
       </thead>
       <tbody>
         {% for team in teams %}
-          <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>
-              <a href="{% url 'l1o:team' team.id %}">
-                {% if team.clinched_promotion %}
-                <strong>x - {{ team.name }}</strong>
-                {% elif team.clinched_relegation %}
-                <s><em>{{ team.name }}</em></s>
-                {% else %}
-                {{ team.name }}
-                {% endif %}
-              </a>
-            </td>
-            <td>{{ team.matches_remaining }}</td>
-            <td>{{ team.wins }}</td>
-            <td>{{ team.draws }}</td>
-            <td>{{ team.losses }}</td>
-            <td>{{ team.total_points }}</td>
-          </tr>
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>
+            <a href="{% url 'l1o:team' team.id %}">
+              {% if team.clinched_promotion %}
+              <strong>x - {{ team.name }}</strong>
+              {% elif team.clinched_relegation %}
+              <s><em>{{ team.name }}</em></s>
+              {% else %} {{ team.name }} {% endif %}
+            </a>
+          </td>
+          <td>{{ team.matches_remaining }}</td>
+          <td>{{ team.wins }}</td>
+          <td>{{ team.draws }}</td>
+          <td>{{ team.losses }}</td>
+          <td>
+            {% if team.clinched_promotion %}
+            <strong>{{ team.total_points }}</strong>
+            {% else %} {{ team.total_points }} {% endif %}
+          </td>
+        </tr>
         {% endfor %}
       </tbody>
     </table>
-    <br>
+    <br />
     {% if division.id == 1 %}
     <a href="/division/2">Go to Women's Premier Division</a>
     {% else %}
     <a href="/division/1">Go to Men's Premier Division</a>
-    {% endif %}
-  {% else %}
+    {% endif %} {% else %}
     <p>no teams</p>
-  {% endif %}
+    {% endif %}
   </body>
 </html>

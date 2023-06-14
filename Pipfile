@@ -9,6 +9,7 @@ psycopg = "*"
 django-environ = "*"
 beautifulsoup4 = "*"
 requests = "*"
+django-debug-toolbar = "*"
 
 [dev-packages]
 

@@ -1,5 +1,5 @@
-from django.forms import ModelForm, ChoiceField
-from .models import Match, Division
+from django.forms import ModelForm
+from .models import Match
 
 
 class MatchForm(ModelForm):
