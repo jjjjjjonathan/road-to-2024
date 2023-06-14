@@ -29,13 +29,21 @@
           <tr>
             <td>{{ forloop.counter }}</td>
             <td>
-              <a href="{% url 'l1o:team' team.id %}">{{ team.name }}</a>
+              <a href="{% url 'l1o:team' team.id %}">
+                {% if team.clinched_promotion %}
+                <strong>x - {{ team.name }}</strong>
+                {% elif team.clinched_relegation %}
+                <s><em>{{ team.name }}</em></s>
+                {% else %}
+                {{ team.name }}
+                {% endif %}
+              </a>
             </td>
             <td>{{ team.matches_remaining }}</td>
             <td>{{ team.wins }}</td>
             <td>{{ team.draws }}</td>
             <td>{{ team.losses }}</td>
-            <td>{{ team.total_points }}</td>          
+            <td>{{ team.total_points }}</td>
           </tr>
         {% endfor %}
       </tbody>
@@ -45,9 +53,6 @@
     <a href="/division/2">Go to Women's Premier Division</a>
     {% else %}
     <a href="/division/1">Go to Men's Premier Division</a>
-    {% endif %}
-    {% if today is not None %}
-    {{ today }}
     {% endif %}
   {% else %}
     <p>no teams</p>

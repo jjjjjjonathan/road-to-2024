@@ -43,7 +43,6 @@ class TeamManager(models.Manager):
                             home_matches__home_score__gt=F("home_matches__away_score")
                         )
                         & Q(home_matches__is_completed__exact=True),
-                        # & Q(home_matches__scheduled_time__lte=date),
                         distinct=True,
                     )
                     + Count(
@@ -52,7 +51,6 @@ class TeamManager(models.Manager):
                             away_matches__away_score__gt=F("away_matches__home_score")
                         )
                         & Q(away_matches__is_completed=True),
-                        # & Q(away_matches__scheduled_time__lte=date),
                         distinct=True,
                     )
                 ),
@@ -63,7 +61,6 @@ class TeamManager(models.Manager):
                             home_matches__home_score__lt=F("home_matches__away_score")
                         )
                         & Q(home_matches__is_completed__exact=True),
-                        # & Q(home_matches__scheduled_time__lte=date),
                         distinct=True,
                     )
                     + Count(
@@ -72,7 +69,6 @@ class TeamManager(models.Manager):
                             away_matches__away_score__lt=F("away_matches__home_score")
                         )
                         & Q(away_matches__is_completed__exact=True),
-                        # & Q(away_matches__scheduled_time__lte=date),
                         distinct=True,
                     )
                 ),
@@ -85,7 +81,6 @@ class TeamManager(models.Manager):
                             )
                         )
                         & Q(home_matches__is_completed__exact=True),
-                        # & Q(home_matches__scheduled_time__lte=date),
                         distinct=True,
                     )
                     + Count(
@@ -96,13 +91,15 @@ class TeamManager(models.Manager):
                             )
                         )
                         & Q(away_matches__is_completed__exact=True),
-                        # & Q(away_matches__scheduled_time__lte=date),
                         distinct=True,
                     )
                 ),
             )
             .annotate(points_in_2023=(F("wins") * 3) + F("draws"))
             .annotate(total_points=(F("points_in_2022") * 0.75) + F("points_in_2023"))
+            .annotate(
+                max_possible_points=F("matches_remaining") * 3 + F("total_points")
+            )
             .order_by("-total_points")
         )
 
@@ -117,6 +114,18 @@ class Team(models.Model):
 
     def __str__(self):
         return self.name
+
+    def clinched_promotion(self):
+        threshold = self.division.teams.with_table_records()[
+            self.division.number_of_promoted_teams
+        ].max_possible_points
+        return self.total_points > threshold
+
+    def clinched_relegation(self):
+        threshold = self.division.teams.with_table_records()[
+            self.division.number_of_promoted_teams - 1
+        ].total_points
+        return self.max_possible_points < threshold
 
     def wins_in_2023(self):
         home_wins = self.home_matches.filter(

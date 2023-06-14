@@ -16,14 +16,28 @@ def division(request, division_id):
     division = get_object_or_404(Division, pk=int(division_id))
 
     teams = division.teams.with_table_records()
+    # teams_list = []
+
+    # for team in teams:
+    #     teams_list.append(
+    #         {
+    #             "id": team.id,
+    #             "name": team.name,
+    #             "matches_remaining": team.matches_remaining,
+    #             "wins": team.wins,
+    #             "losses": team.losses,
+    #             "draws": team.draws,
+    #             "total_points": team.total_points,
+    #             "clinched_promotion": team.clinched_promotion(),
+    #             "clinched_relegation": team.clinched_relegation(),
+    #         }
+    #     )
+
+    # print(teams_list)
 
     context = {
         "division": division,
         "teams": teams,
-        "filter_date": (
-            request.method == "GET" and "date" in request.GET and request.GET["date"]
-        )
-        or None,
     }
     return render(request, "division/division.html", context)
 
