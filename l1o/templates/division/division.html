@@ -1,3 +1,4 @@
+{% load l1o_extras %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -30,9 +31,9 @@
           <td>{{ forloop.counter }}</td>
           <td>
             <a href="{% url 'l1o:team' team.id %}">
-              {% if team.clinched_promotion %}
+              {% if team|clinched_promotion:max_points_teams %}
               <strong>x - {{ team.name }}</strong>
-              {% elif team.clinched_relegation %}
+              {% elif team|clinched_relegation:teams %}
               <s><em>{{ team.name }}</em></s>
               {% else %} {{ team.name }} {% endif %}
             </a>
@@ -42,7 +43,7 @@
           <td>{{ team.draws }}</td>
           <td>{{ team.losses }}</td>
           <td>
-            {% if team.clinched_promotion %}
+            {% if team|clinched_promotion:teams %}
             <strong>{{ team.total_points }}</strong>
             {% else %} {{ team.total_points }} {% endif %}
           </td>

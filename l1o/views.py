@@ -22,6 +22,7 @@ def division(request, division_id):
     context = {
         "division": division,
         "teams": teams,
+        "max_points_teams": max_points_teams,
         "threshold_points": threshold_team.max_possible_points,
     }
     return render(request, "division/division.html", context)

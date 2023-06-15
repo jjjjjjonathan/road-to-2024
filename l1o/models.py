@@ -115,20 +115,6 @@ class Team(models.Model):
     def __str__(self):
         return self.name
 
-    def clinched_promotion(self):
-        threshold = (
-            self.division.teams.with_table_records()
-            .order_by("-max_possible_points")[self.division.number_of_promoted_teams]
-            .max_possible_points
-        )
-        return self.total_points > threshold
-
-    def clinched_relegation(self):
-        threshold = self.division.teams.with_table_records()[
-            self.division.number_of_promoted_teams - 1
-        ].total_points
-        return self.max_possible_points < threshold
-
     def wins_in_2023(self):
         home_wins = self.home_matches.filter(
             home_score__gt=models.F("away_score"), is_completed=True
