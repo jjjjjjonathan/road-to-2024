@@ -39,7 +39,12 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "debug_toolbar",
+    "tailwind",
+    "theme",
+    "django_browser_reload",
 ]
+
+TAILWIND_APP_NAME = "theme"
 
 MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
@@ -50,6 +55,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = "league1python.urls"

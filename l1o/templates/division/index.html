@@ -1,19 +1,23 @@
+{% load tailwind_tags %}
 <!DOCTYPE html>
 <html>
   <head>
     <title>League1 Ontario pro/rel standings</title>
+    {% tailwind_css %}
   </head>
   <body>
     {% if divisions %}
     <ul>
-    {% for division in divisions %}
+      {% for division in divisions %}
       <li>
-        <a href="{% url 'l1o:division' division.id %}">{{ division.name }}</a>
+        <a
+          href="{% url 'l1o:division' division.id %}"
+          class="text-2xl hover:underline"
+          >{{ division.name }}</a
+        >
       </li>
-    {% endfor %}
+      {% endfor %}
     </ul>
     {% endif %}
   </body>
 </html>
-
-
