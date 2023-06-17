@@ -1,3 +1,4 @@
+{% load tailwind_tags %}
 {% load l1o_extras %}
 <!DOCTYPE html>
 <html lang="en">
@@ -5,20 +6,21 @@
     <title>
       {% if division %} {{ division.name }} {% else %} 404 {% endif %}
     </title>
+    {% tailwind_css %}
   </head>
   <body>
     {% if division %}
-    <h1>{{division.name}}</h1>
-    <h2>
+    <h1 class="text-4xl font-bold">{{division.name}}</h1>
+    <h2 class="text-2xl font-semibold">
       You currently need at least {{ threshold_points }} points to guarantee
       qualification for League1 Ontario's Premier Division in 2024.
     </h2>
-    <table>
+    <table class="border border-collapse border-slate-500">
       <thead>
         <tr>
           <th>Rank</th>
           <th>Team</th>
-          <th>Matches Remaining</th>
+          <th>Matches Left</th>
           <th>Wins</th>
           <th>Draws</th>
           <th>Losses</th>
@@ -27,35 +29,21 @@
       </thead>
       <tbody>
         {% for team in teams %}
-        <tr>
-          <td>{{ forloop.counter }}</td>
-          <td>
-            <a href="{% url 'l1o:team' team.id %}">
-              {% if team|clinched_promotion:max_points_teams %}
-              <strong>x - {{ team.name }}</strong>
-              {% elif team|clinched_relegation:teams %}
-              <s><em>{{ team.name }}</em></s>
-              {% else %} {{ team.name }} {% endif %}
-            </a>
-          </td>
-          <td>{{ team.matches_remaining }}</td>
-          <td>{{ team.wins }}</td>
-          <td>{{ team.draws }}</td>
-          <td>{{ team.losses }}</td>
-          <td>
-            {% if team|clinched_promotion:teams %}
-            <strong>{{ team.total_points }}</strong>
-            {% else %} {{ team.total_points }} {% endif %}
-          </td>
-        </tr>
+          {% if team|clinched_promotion:max_points_teams %}
+            {% include "division/promoted_team.html" with rank=forloop.counter team=team %}
+          {% elif team|clinched_relegation:teams %}
+            {% include "division/relegated_team.html" with rank=forloop.counter team=team %}
+          {% else %}
+            {% include "division/undecided_team.html" with rank=forloop.counter number_of_promoted_teams=division.number_of_promoted_teams team=team %}
+          {% endif %}
         {% endfor %}
       </tbody>
     </table>
     <br />
     {% if division.id == 1 %}
-    <a href="/division/2">Go to Women's Premier Division</a>
+    <a href="/division/2" class="hover:underline">Go to Women's Premier Division</a>
     {% else %}
-    <a href="/division/1">Go to Men's Premier Division</a>
+    <a href="/division/1" class="hover:underline">Go to Men's Premier Division</a>
     {% endif %} {% else %}
     <p>no teams</p>
     {% endif %}

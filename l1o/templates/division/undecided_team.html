@@ -1,0 +1,11 @@
+<tr>
+  <td class="text-center {% if number_of_promoted_teams >= rank %}bg-emerald-300{% else %}bg-red-300{% endif %}">{{ rank }}</td>
+  <td>
+    <a href="{% url 'l1o:team' team.id %}" class="hover:underline">{{ team.name }}</a>
+  </td>
+  <td class="text-right p-2">{{ team.matches_remaining }}</td>
+  <td class="text-right">{{ team.wins }}</td>
+  <td class="text-right">{{ team.draws }}</td>
+  <td class="text-right">{{ team.losses }}</td>
+  <td class="text-right">{{ team.total_points }}</td>
+</tr>
