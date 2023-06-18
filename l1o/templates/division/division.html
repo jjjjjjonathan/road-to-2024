@@ -13,7 +13,7 @@
     <div class="flex flex-col items-center justify-between h-screen gap-y-2">
       <h1 class="text-4xl font-bold text-center">Road to 2024 {{division.name}} Standings</h1>
     <table class="border border-collapse border-slate-400 mt-2">
-      <caption class="caption-top text-sm">{{ threshold_points }} points are currently needed to qualify for 2024 {{ division.name }}.</caption>
+      <caption class="caption-top text-sm">{{ promotion_threshold }} points are currently needed to qualify for 2024 {{ division.name }}.</caption>
       <thead>
         <tr class="bg-slate-200">
           <th class="p-2 border border-slate-300">Rank</th>
@@ -27,9 +27,9 @@
       </thead>
       <tbody>
         {% for team in teams %}
-          {% if team|clinched_promotion:max_points_teams %}
+          {% if team.total_points|clinched_promotion:promotion_threshold %}
             {% include "division/promoted_team.html" with rank=forloop.counter team=team %}
-          {% elif team|clinched_relegation:teams %}
+          {% elif team.max_possible_points|clinched_relegation:relegation_threshold %}
             {% include "division/relegated_team.html" with rank=forloop.counter team=team %}
           {% else %}
             {% include "division/undecided_team.html" with rank=forloop.counter number_of_promoted_teams=division.number_of_promoted_teams team=team %}

@@ -3,16 +3,12 @@ from django import template
 register = template.Library()
 
 
-def clinched_promotion(team, teams):
-    index = team.division.number_of_promoted_teams
-    threshold = teams[index].max_possible_points
-    return team.total_points > threshold
+def clinched_promotion(points, promotion_threshold):
+    return points > promotion_threshold
 
 
-def clinched_relegation(team, teams):
-    index = team.division.number_of_promoted_teams - 1
-    threshold = teams[index].total_points
-    return team.max_possible_points < threshold
+def clinched_relegation(max_possible_points, relegation_threshold):
+    return max_possible_points < relegation_threshold
 
 
 register.filter("clinched_promotion", clinched_promotion)

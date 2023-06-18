@@ -17,13 +17,16 @@ def division(request, division_id):
 
     teams = division.teams.with_table_records()
     max_points_teams = teams.order_by("-max_possible_points")
-    threshold_team = max_points_teams[division.number_of_promoted_teams]
+    promotion_threshold = max_points_teams[
+        division.number_of_promoted_teams
+    ].max_possible_points
+    relegation_threshold = teams[division.number_of_promoted_teams - 1].total_points
 
     context = {
         "division": division,
         "teams": teams,
-        "max_points_teams": max_points_teams,
-        "threshold_points": threshold_team.max_possible_points,
+        "promotion_threshold": promotion_threshold,
+        "relegation_threshold": relegation_threshold,
     }
     return render(request, "division/division.html", context)
 
@@ -44,7 +47,7 @@ def update(request):
 
 
 def team(request, team_id):
-    team = get_object_or_404(Team, pk=int(team_id))
+    team = get_object_or_404(Team.objects.with_table_records(), pk=int(team_id))
     home_matches = team.home_matches.all()
     away_matches = team.away_matches.all()
     matches = home_matches | away_matches
@@ -52,8 +55,8 @@ def team(request, team_id):
     context = {
         "team": team,
         "matches": sorted_matches,
-        "wins": team.wins_in_2023(),
-        "losses": team.losses_in_2023(),
-        "draws": team.draws_in_2023(),
+        "wins": team.wins,
+        "losses": team.losses,
+        "draws": team.draws,
     }
     return render(request, "team/team.html", context)
