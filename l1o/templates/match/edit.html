@@ -4,8 +4,8 @@
     <title>Edit match</title>
   </head>
   <body>
-    <h1>{{ match.home_team.name }} (H) v. {{ match.away_team.name }} (A)</h1>
-    <h2>{{ match.division.name }}</h2>
+    <h1>{{ home_team }} (H) v. {{ away_team }} (A)</h1>
+    <h2>{{ division }}</h2>
     <form action="{% url 'l1o:update' %}" method="post">
       {% csrf_token %}
       <input type="hidden" name="match_id" value="{{ match.id }}" />
@@ -14,7 +14,7 @@
       <input type="submit" value="Submit" />
     </form>
     <a href="{% url 'l1o:division' match.division.id %}"
-      >Go back to {{ match.division.name }}</a
+      >Go back to {{ division}}</a
     >
   </body>
 </html>
