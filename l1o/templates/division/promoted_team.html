@@ -1,11 +1,11 @@
 <tr class="bg-emerald-300">
-  <td class="text-center">{{ rank }}</td>
-  <td>
-    <a href="{% url 'l1o:team' team.id %}" class="hover:underline font-bold">{{ team.name }}</a>
+  <td class="text-center border border-slate-400">{{ rank }}.</td>
+  <td class="border border-slate-400">
+    <a href="{% url 'l1o:team' team.id %}" class="hover:underline font-bold p-2">{{ team.name }}</a>
   </td>
-  <td class="text-right p-2">{{ team.matches_remaining }}</td>
-  <td class="text-right">{{ team.wins }}</td>
-  <td class="text-right">{{ team.draws }}</td>
-  <td class="text-right">{{ team.losses }}</td>
-  <td class="text-right font-bold">{{ team.total_points }}</td>
+  <td class="text-right p-2 border border-slate-400">{{ team.matches_remaining }}</td>
+  <td class="text-right p-2 border border-slate-400">{{ team.wins }}</td>
+  <td class="text-right p-2 border border-slate-400">{{ team.draws }}</td>
+  <td class="text-right p-2 border border-slate-400">{{ team.losses }}</td>
+  <td class="text-right font-bold p-2 border border-slate-400">{{ team.total_points }}</td>
 </tr>

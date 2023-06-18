@@ -10,21 +10,19 @@
   </head>
   <body>
     {% if division %}
-    <h1 class="text-4xl font-bold">{{division.name}}</h1>
-    <h2 class="text-2xl font-semibold">
-      You currently need at least {{ threshold_points }} points to guarantee
-      qualification for League1 Ontario's Premier Division in 2024.
-    </h2>
-    <table class="border border-collapse border-slate-500">
+    <div class="flex flex-col items-center justify-between h-screen gap-y-2">
+      <h1 class="text-4xl font-bold text-center">Road to 2024 {{division.name}} Standings</h1>
+    <table class="border border-collapse border-slate-400 mt-2">
+      <caption class="caption-top text-sm">{{ threshold_points }} points are currently needed to qualify for 2024 {{ division.name }}.</caption>
       <thead>
-        <tr>
-          <th>Rank</th>
-          <th>Team</th>
-          <th>Matches Left</th>
-          <th>Wins</th>
-          <th>Draws</th>
-          <th>Losses</th>
-          <th>Total Points</th>
+        <tr class="bg-slate-200">
+          <th class="p-2 border border-slate-300">Rank</th>
+          <th class="p-2 border border-slate-300">Team</th>
+          <th class="p-2 border border-slate-300">Matches Remaining</th>
+          <th class="p-2 border border-slate-300">Wins</th>
+          <th class="p-2 border border-slate-300">Draws</th>
+          <th class="p-2 border border-slate-300">Losses</th>
+          <th class="p-2 border border-slate-300">Total Points</th>
         </tr>
       </thead>
       <tbody>
@@ -41,11 +39,13 @@
     </table>
     <br />
     {% if division.id == 1 %}
-    <a href="/division/2" class="hover:underline">Go to Women's Premier Division</a>
+    <a href="/division/2" class="hover:underline pb-6">Go to Women's Premier Division</a>
     {% else %}
-    <a href="/division/1" class="hover:underline">Go to Men's Premier Division</a>
-    {% endif %} {% else %}
+    <a href="/division/1" class="hover:underline pb-6">Go to Men's Premier Division</a>
+    {% endif %}
+    {% else %}
     <p>no teams</p>
+    </div>
     {% endif %}
   </body>
 </html>
