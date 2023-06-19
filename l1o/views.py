@@ -58,11 +58,18 @@ def update(request):
 
 
 def team(request, team_id):
-    team = get_object_or_404(Team.objects.with_table_records(), pk=int(team_id))
-    home_matches = team.home_matches.all()
-    away_matches = team.away_matches.all()
-    matches = home_matches | away_matches
-    sorted_matches = matches.distinct().order_by("scheduled_time")
+    team = get_object_or_404(
+        Team.objects.with_table_records().prefetch_related(
+            "home_matches", "away_matches"
+        ),
+        pk=int(team_id),
+    )
+    matches = team.home_matches.all() | team.away_matches.all()
+    sorted_matches = (
+        matches.distinct()
+        .select_related("home_team", "away_team")
+        .order_by("scheduled_time")
+    )
     context = {
         "team": team,
         "matches": sorted_matches,
