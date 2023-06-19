@@ -9,7 +9,7 @@ class IndexView(generic.ListView):
     context_object_name = "divisions"
 
     def get_queryset(self):
-        return Division.objects.all()
+        return Division.objects.only("id", "name")
 
 
 def division(request, division_id):
