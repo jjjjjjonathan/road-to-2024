@@ -11,6 +11,7 @@ beautifulsoup4 = "*"
 requests = "*"
 django-tailwind = "*"
 gunicorn = "*"
+psycopg2 = "*"
 
 [dev-packages]
 
