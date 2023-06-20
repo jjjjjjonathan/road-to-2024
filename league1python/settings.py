@@ -151,3 +151,7 @@ INTERNAL_IPS = [
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
+
+import mimetypes
+
+mimetypes.add_type("text/css", ".css", True)
