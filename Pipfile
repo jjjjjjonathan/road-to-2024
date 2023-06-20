@@ -12,6 +12,7 @@ requests = "*"
 django-tailwind = "*"
 gunicorn = "*"
 psycopg2 = "*"
+whitenoise = "*"
 
 [dev-packages]
 
