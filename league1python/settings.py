@@ -151,6 +151,11 @@ INTERNAL_IPS = [
     # ...
 ]
 
-# SECURE_SSL_REDIRECT = True
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://roadto2024.jcheng.ca",
+    "https://django-l1o-production.up.railway.app",
+]
