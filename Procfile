@@ -1,1 +1,1 @@
-web: gunicorn 'league1python.wsgi'
+web: python manage.py collectstatic && gunicorn 'league1python.wsgi'
