@@ -1,77 +1,90 @@
+{% load tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <title>{{ team.name }} || {{ team.division.name }}</title>
+    {% tailwind_css %}
   </head>
-  <body>
-    <h1>{{ team.name }} ({{ wins }}-{{ draws }}-{{ losses }}) </h1>
-<h2>{{ team.division.name }}</h2>
-<table>
-  <thead>
-    <tr>
-      <th>Date</th>
-      <th>Home Team</th>
-      <th>Home Score</th>
-      <th>Away Score</th>
-      <th>Away Team</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for match in matches %}
-    <tr>
-      <td>
-        <a href="{% url 'l1o:edit' match.e2e_id %}">{{ match.scheduled_time }}</a>
-      </td>
-      <td>
-        {% if match.home_score > match.away_score %}
-        <strong>{{ match.home_team.name }}</strong>
-        {% else %}
-        {{ match.home_team.name }}
-        {% endif %}
-      </td>
-      <td>
-        {% if match.is_completed %}
-        {% if match.home_score > match.away_score %}
-        <strong>{{ match.home_score }}</strong>
-        {% else %}
-        {{ match.home_score }}
-        {% endif %}
-        {% else %}
-        -
-        {% endif %}
-      </td>
-      <td>
-        {% if match.is_completed %}
-        {% if match.away_score > match.home_score %}
-        <strong>{{ match.away_score }}</strong>
-        {% else %}
-        {{ match.away_score }}
-        {% endif %}
-        {% else %}
-        -
-        {% endif %}
-      </td>
-      <td>
-        {% if match.away_score > match.home_score %}
-        <strong>{{ match.away_team.name }}</strong>
-        {% else %}
-        {{ match.away_team.name }}
-        {% endif %}
-      </td>
-      <td>
-        {% if match.is_completed %}
-        Final
-        {% else %}
-        Pending
-        {% endif %}
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-<a href="{% url 'l1o:division' team.division.id %}">Go back to {{ team.division.name }}</a>
+  <body class="bg-slate-100">
+    <div class="flex flex-col items-center h-screen gap-y-4">
+      <header class="mt-4">
+        <h1 class="text-4xl font-bold text-center">
+          {{ team.name }} ({{ wins }}-{{ draws }}-{{ losses }})
+        </h1>
+        <h2 class="text-2xl font-semibold text-center mt-2">
+          {{ team.division.name }}
+        </h2>
+      </header>
+      <table class="border border-collapse border-slate-400 mt-2">
+        <thead>
+          <tr class="bg-slate-200">
+            <th class="p-2 border border-slate-400">Date</th>
+            <th class="p-2 border border-slate-400">Home Team</th>
+            <th class="p-2 border border-slate-400">Home Score</th>
+            <th class="p-2 border border-slate-400">Away Score</th>
+            <th class="p-2 border border-slate-400">Away Team</th>
+            <th class="p-2 border border-slate-400">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for match in matches %}
+          <tr class="bg-slate-100">
+            <td class="text-left p-2 border border-slate-400">
+              <a
+                class="font-semibold hover:underline text-blue-700"
+                href="{% url 'l1o:edit' match.e2e_id %}"
+                >{{ match.scheduled_time }}</a
+              >
+            </td>
+            <td class="text-left p-2 border border-slate-400">
+              {% if match.home_score > match.away_score %}
+              <span class="font-bold">{{ match.home_team.name }}</span>
+              {% else %} {{ match.home_team.name }} {% endif %}
+            </td>
+            <td class="text-right p-2 border border-slate-400">
+              {% if match.is_completed %}
+              <!---->
+              {% if match.home_score > match.away_score %}
+              <!---->
+              <span class="font-bold">{{ match.home_score }}</span>
+              {% else %}
+              <!---->
+              {{ match.home_score }} {% endif %}
+              <!---->
+              {% else %} -
+              <!---->
+              {% endif %}
+            </td>
+            <td class="text-right p-2 border border-slate-400">
+              {% if match.is_completed %}
+              <!---->
+              {% if match.away_score > match.home_score %}
+              <span class="font-bold">{{ match.away_score }}</span>
+              {% else %}
+              <!---->
+              {{ match.away_score }}
+              <!---->
+              {% endif %}
+              <!---->
+              {% else %} -
+              <!---->
+              {% endif %}
+            </td>
+            <td class="text-left p-2 border border-slate-400">
+              {% if match.away_score > match.home_score %}
+              <span class="font-bold">{{ match.away_team.name }}</span>
+              {% else %} {{ match.away_team.name }} {% endif %}
+            </td>
+            <td class="text-left p-2 border border-slate-400">
+              {% if match.is_completed %} Final {% else %} Pending {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <a href="{% url 'l1o:division' team.division.id %}"
+        >Go back to {{ team.division.name }}</a
+      >
+    </div>
   </body>
 </html>
-
-
