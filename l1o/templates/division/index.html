@@ -5,15 +5,18 @@
     <title>League1 Ontario pro/rel standings</title>
     {% tailwind_css %}
   </head>
-  <body>
+  <body class="bg-slate-100">
     {% if divisions %}
-    <ul>
+    <ul
+      class="flex flex-col items-center w-full h-screen justify-center gap-y-24"
+    >
       {% for division in divisions %}
-      <li>
+      <li class="">
         <a
           href="{% url 'l1o:division' division.id %}"
-          class="text-2xl hover:underline"
-          >{{ division.name }}</a
+          class="text-2xl hover:underline text-indigo-700"
+          >Click here to go to {{ division.name }} promotion/relegation
+          standings</a
         >
       </li>
       {% endfor %}
