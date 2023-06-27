@@ -1,12 +1,9 @@
-{% load tailwind_tags %}
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>League1 Ontario pro/rel standings</title>
-    {% tailwind_css %}
-  </head>
-  <body class="bg-slate-100">
-    {% if divisions %}
+{% extends "base.html" %}
+{% block title %}
+League1 Ontario pro/rel standings
+{% endblock %}
+{% block content %}
+{% if divisions %}
     <ul
       class="flex flex-col items-center w-full h-screen justify-center gap-y-24"
     >
@@ -22,5 +19,4 @@
       {% endfor %}
     </ul>
     {% endif %}
-  </body>
-</html>
+{% endblock %}
