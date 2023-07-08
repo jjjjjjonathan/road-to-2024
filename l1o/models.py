@@ -20,14 +20,14 @@ class TeamManager(models.Manager):
     def with_playoffs(self):
         return (
             self.annotate(
-                # goals_for=(
-                #     Sum("home_matches__home_goals", distinct=True)
-                #     + Sum("away_matches__away_goals", distinct=True)
-                # ),
-                # goals_against=(
-                #     Sum("home_matches__away_goals", distinct=True)
-                #     + Sum("away_matches__home_goals", distinct=True)
-                # ),
+                goals_for=(
+                    Sum("home_matches__home_score", distinct=True)
+                    + Sum("away_matches__away_score", distinct=True)
+                ),
+                goals_against=(
+                    Sum("home_matches__away_score", distinct=True)
+                    + Sum("away_matches__home_score", distinct=True)
+                ),
                 matches_remaining=(
                     Count("home_matches", distinct=True)
                     + Count("away_matches", distinct=True)
@@ -107,7 +107,8 @@ class TeamManager(models.Manager):
             .annotate(
                 max_possible_points=F("matches_remaining") * 3 + F("total_points")
             )
-            .order_by("-total_points")
+            .annotate(goal_differential=F("goals_for") + F("goals_against"))
+            .order_by("-total_points", "-goal_differential", "-goals_for")
         )
 
     def with_table_records(self):
