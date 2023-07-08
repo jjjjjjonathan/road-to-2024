@@ -31,7 +31,7 @@
           {% elif team.max_possible_points|clinched_relegation:relegation_threshold %}
             {% include "division/relegated_team.html" with rank=forloop.counter team=team %}
           {% else %}
-            {% include "division/undecided_team.html" with rank=forloop.counter number_of_promoted_teams=division.number_of_promoted_teams team=team %}
+            {% include "division/undecided_team.html" with rank=forloop.counter number_of_successful_teams=number_of_successful_teams team=team %}
           {% endif %}
         {% endfor %}
       </tbody>

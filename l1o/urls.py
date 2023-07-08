@@ -11,4 +11,5 @@ urlpatterns = [
     path("match/<int:e2e_id>/edit", views.edit, name="edit"),
     path("match/update", views.update, name="update"),
     path("team/<int:team_id>/", views.team, name="team"),
+    path("playoffs/<int:division_id>/", views.playoffs, name="playoffs"),
 ]

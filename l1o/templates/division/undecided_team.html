@@ -1,5 +1,5 @@
 <tr class="bg-slate-100">
-  <td class="text-center {% if number_of_promoted_teams >= rank %}bg-emerald-300{% else %}bg-red-300{% endif %} border border-slate-400">{{ rank }}.</td>
+  <td class="text-center {% if number_of_successful_teams >= rank %}bg-emerald-300{% else %}bg-red-300{% endif %} border border-slate-400">{{ rank }}.</td>
   <td class="border border-slate-400">
     <a href="{% url 'l1o:team' team.id %}" class="hover:underline p-2">{{ team.name }}</a>
   </td>

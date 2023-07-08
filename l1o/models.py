@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import Q, F, Count
+from django.db.models import Q, F, Count, Sum
 
 
 class Division(models.Model):
@@ -17,6 +17,99 @@ class Division(models.Model):
 
 
 class TeamManager(models.Manager):
+    def with_playoffs(self):
+        return (
+            self.annotate(
+                # goals_for=(
+                #     Sum("home_matches__home_goals", distinct=True)
+                #     + Sum("away_matches__away_goals", distinct=True)
+                # ),
+                # goals_against=(
+                #     Sum("home_matches__away_goals", distinct=True)
+                #     + Sum("away_matches__home_goals", distinct=True)
+                # ),
+                matches_remaining=(
+                    Count("home_matches", distinct=True)
+                    + Count("away_matches", distinct=True)
+                    - (
+                        Count(
+                            "home_matches",
+                            distinct=True,
+                            filter=Q(home_matches__is_completed__exact=True),
+                        )
+                        + Count(
+                            "away_matches",
+                            distinct=True,
+                            filter=Q(away_matches__is_completed__exact=True),
+                        )
+                    )
+                ),
+                wins=(
+                    Count(
+                        "home_matches",
+                        filter=Q(
+                            home_matches__home_score__gt=F("home_matches__away_score")
+                        )
+                        & Q(home_matches__is_completed__exact=True),
+                        distinct=True,
+                    )
+                    + Count(
+                        "away_matches",
+                        filter=Q(
+                            away_matches__away_score__gt=F("away_matches__home_score")
+                        )
+                        & Q(away_matches__is_completed=True),
+                        distinct=True,
+                    )
+                ),
+                losses=(
+                    Count(
+                        "home_matches",
+                        filter=Q(
+                            home_matches__home_score__lt=F("home_matches__away_score")
+                        )
+                        & Q(home_matches__is_completed__exact=True),
+                        distinct=True,
+                    )
+                    + Count(
+                        "away_matches",
+                        filter=Q(
+                            away_matches__away_score__lt=F("away_matches__home_score")
+                        )
+                        & Q(away_matches__is_completed__exact=True),
+                        distinct=True,
+                    )
+                ),
+                draws=(
+                    Count(
+                        "home_matches",
+                        filter=Q(
+                            home_matches__home_score__exact=F(
+                                "home_matches__away_score"
+                            )
+                        )
+                        & Q(home_matches__is_completed__exact=True),
+                        distinct=True,
+                    )
+                    + Count(
+                        "away_matches",
+                        filter=Q(
+                            away_matches__away_score__exact=F(
+                                "away_matches__home_score"
+                            )
+                        )
+                        & Q(away_matches__is_completed__exact=True),
+                        distinct=True,
+                    )
+                ),
+            )
+            .annotate(total_points=F("wins") * 3 + F("draws"))
+            .annotate(
+                max_possible_points=F("matches_remaining") * 3 + F("total_points")
+            )
+            .order_by("-total_points")
+        )
+
     def with_table_records(self):
         return (
             self.annotate(
