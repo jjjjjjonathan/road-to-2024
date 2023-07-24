@@ -107,7 +107,7 @@ class TeamManager(models.Manager):
             .annotate(
                 max_possible_points=F("matches_remaining") * 3 + F("total_points")
             )
-            .annotate(goal_differential=F("goals_for") + F("goals_against"))
+            .annotate(goal_differential=F("goals_for") - F("goals_against"))
             .order_by("-total_points", "-goal_differential", "-goals_for")
         )
 

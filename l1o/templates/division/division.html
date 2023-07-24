@@ -21,17 +21,22 @@
           <th class="p-2 border border-slate-300">Wins</th>
           <th class="p-2 border border-slate-300">Draws</th>
           <th class="p-2 border border-slate-300">Losses</th>
+          {% if is_playoff_calculation %}
+          <th class="p-2 border border-slate-300">GF</th>
+          <th class="p-2 border border-slate-300">GA</th>
+          <th class="p-2 border border-slate-300">GD</th>
+          {% endif %}
           <th class="p-2 border border-slate-300">Total Points</th>
         </tr>
       </thead>
       <tbody>
         {% for team in teams %}
           {% if team.total_points|clinched_promotion:promotion_threshold %}
-            {% include "division/promoted_team.html" with rank=forloop.counter team=team %}
+            {% include "division/promoted_team.html" with rank=forloop.counter team=team is_playoff_calculation=is_playoff_calculation %}
           {% elif team.max_possible_points|clinched_relegation:relegation_threshold %}
-            {% include "division/relegated_team.html" with rank=forloop.counter team=team %}
+            {% include "division/relegated_team.html" with rank=forloop.counter team=team is_playoff_calculation=is_playoff_calculation %}
           {% else %}
-            {% include "division/undecided_team.html" with rank=forloop.counter number_of_successful_teams=number_of_successful_teams team=team %}
+            {% include "division/undecided_team.html" with rank=forloop.counter number_of_successful_teams=number_of_successful_teams team=team is_playoff_calculation=is_playoff_calculation %}
           {% endif %}
         {% endfor %}
       </tbody>

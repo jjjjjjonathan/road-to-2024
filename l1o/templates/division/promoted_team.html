@@ -7,5 +7,10 @@
   <td class="text-right p-2 border border-slate-400">{{ team.wins }}</td>
   <td class="text-right p-2 border border-slate-400">{{ team.draws }}</td>
   <td class="text-right p-2 border border-slate-400">{{ team.losses }}</td>
+  {% if is_playoff_calculation %}
+  <td class="text-right p-2 border border-slate-400">{{ team.goals_for }}</td>
+  <td class="text-right p-2 border border-slate-400">{{ team.goals_against }}</td>
+  <td class="text-right p-2 border border-slate-400">{{ team.goal_differential }}</td>
+  {% endif %}
   <td class="text-right font-bold p-2 border border-slate-400">{{ team.total_points }}</td>
 </tr>

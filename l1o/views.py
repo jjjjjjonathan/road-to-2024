@@ -28,6 +28,7 @@ def division(request, division_id):
         "promotion_threshold": promotion_threshold,
         "relegation_threshold": relegation_threshold,
         "number_of_successful_teams": division.number_of_promoted_teams,
+        "is_playoff_calculation": False
     }
     return render(request, "division/division.html", context)
 
@@ -85,6 +86,8 @@ def playoffs(request, division_id):
     division = get_object_or_404(Division, pk=int(division_id))
 
     teams = division.teams.with_playoffs()
+    print(teams.last().home_matches.all())
+    print(teams.last().goals_for)
     max_points_teams = teams.order_by("-max_possible_points")
     playoff_threshold = max_points_teams[6].max_possible_points
     sixth_place_points = teams[5].total_points
@@ -95,5 +98,6 @@ def playoffs(request, division_id):
         "promotion_threshold": playoff_threshold,
         "relegation_threshold": sixth_place_points,
         "number_of_successful_teams": 6,
+        "is_playoff_calculation": True
     }
     return render(request, "division/division.html", context)
